@@ -1,0 +1,58 @@
+application {
+  config {
+    baseName coopcycleJhipster,
+    applicationType monolith,
+    authenticationType jwt,
+    prodDatabaseType postgresql,
+    skipUserManagement true
+  }
+  entities *
+}
+
+entity User {
+login String required unique
+password String required minlength(8)
+firstName String
+lastName String
+email String required unique
+activated Boolean
+role String required
+}
+
+entity Restaurant {
+name String required
+description String
+location String required
+}
+
+entity Menu {
+name String required
+description String
+}
+
+entity Item {
+name String required
+description String
+price Float required min(0)
+}
+
+entity Cart {}
+
+entity Delivery {
+deliveryTime Instant required
+pickupTime Instant required
+location String required
+}
+
+// Enumerations
+enum MemberRole {
+ADMIN, COURIER, RESTAURANT_OWNER, CUSTOMER
+}
+
+// Relations
+relationship OneToMany {
+Restaurant{menus} to Menu{restaurant}
+Menu{items} to Item{menu}
+User{cart} to Cart{user}
+Cart{delivery} to Delivery{cart}
+}
