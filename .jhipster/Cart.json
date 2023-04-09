@@ -1,0 +1,34 @@
+{
+  "applications": ["coopcycleJhipster"],
+  "changelogDate": "20230409073627",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "cart",
+  "fields": [
+    {
+      "fieldName": "userId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Cart",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "delivery",
+      "otherEntityRelationshipName": "cartId",
+      "relationshipName": "deliveries",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "userCoopcycle",
+      "otherEntityRelationshipName": "carts",
+      "relationshipName": "userId",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

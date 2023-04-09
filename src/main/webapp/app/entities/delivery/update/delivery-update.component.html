@@ -1,0 +1,213 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-delivery-heading"
+        data-cy="DeliveryCreateUpdateHeading"
+        jhiTranslate="coopcycleJhipsterApp.delivery.home.createOrEditLabel"
+      >
+        Create or edit a Delivery
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="coopcycleJhipsterApp.delivery.cartId" for="field_cartId">Cart Id</label>
+          <input type="number" class="form-control" name="cartId" id="field_cartId" data-cy="cartId" formControlName="cartId" />
+          <div *ngIf="editForm.get('cartId')!.invalid && (editForm.get('cartId')!.dirty || editForm.get('cartId')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('cartId')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('cartId')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="coopcycleJhipsterApp.delivery.courierId" for="field_courierId">Courier Id</label>
+          <input type="number" class="form-control" name="courierId" id="field_courierId" data-cy="courierId" formControlName="courierId" />
+          <div *ngIf="editForm.get('courierId')!.invalid && (editForm.get('courierId')!.dirty || editForm.get('courierId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('courierId')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('courierId')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="coopcycleJhipsterApp.delivery.restaurantId" for="field_restaurantId">Restaurant Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="restaurantId"
+            id="field_restaurantId"
+            data-cy="restaurantId"
+            formControlName="restaurantId"
+          />
+          <div
+            *ngIf="editForm.get('restaurantId')!.invalid && (editForm.get('restaurantId')!.dirty || editForm.get('restaurantId')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('restaurantId')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('restaurantId')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="coopcycleJhipsterApp.delivery.deliveryTime" for="field_deliveryTime">Delivery Time</label>
+          <div class="d-flex">
+            <input
+              id="field_deliveryTime"
+              data-cy="deliveryTime"
+              type="datetime-local"
+              class="form-control"
+              name="deliveryTime"
+              formControlName="deliveryTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="editForm.get('deliveryTime')!.invalid && (editForm.get('deliveryTime')!.dirty || editForm.get('deliveryTime')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('deliveryTime')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('deliveryTime')?.errors?.datetimelocal"
+              jhiTranslate="entity.validation.datetimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="coopcycleJhipsterApp.delivery.pickupTime" for="field_pickupTime">Pickup Time</label>
+          <div class="d-flex">
+            <input
+              id="field_pickupTime"
+              data-cy="pickupTime"
+              type="datetime-local"
+              class="form-control"
+              name="pickupTime"
+              formControlName="pickupTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('pickupTime')!.invalid && (editForm.get('pickupTime')!.dirty || editForm.get('pickupTime')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('pickupTime')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('pickupTime')?.errors?.datetimelocal"
+              jhiTranslate="entity.validation.datetimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="coopcycleJhipsterApp.delivery.courierId" for="field_courierId">Courier Id</label>
+          <select
+            class="form-control"
+            id="field_courierId"
+            data-cy="courierId"
+            name="courierId"
+            formControlName="courierId"
+            [compareWith]="compareMember"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="memberOption" *ngFor="let memberOption of membersSharedCollection">{{ memberOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="coopcycleJhipsterApp.delivery.restaurantId" for="field_restaurantId">Restaurant Id</label>
+          <select
+            class="form-control"
+            id="field_restaurantId"
+            data-cy="restaurantId"
+            name="restaurantId"
+            formControlName="restaurantId"
+            [compareWith]="compareRestaurant"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="restaurantOption" *ngFor="let restaurantOption of restaurantsSharedCollection">
+              {{ restaurantOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="coopcycleJhipsterApp.delivery.cartId" for="field_cartId">Cart Id</label>
+          <select
+            class="form-control"
+            id="field_cartId"
+            data-cy="cartId"
+            name="cartId"
+            formControlName="cartId"
+            [compareWith]="compareCart"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="cartOption" *ngFor="let cartOption of cartsSharedCollection">{{ cartOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

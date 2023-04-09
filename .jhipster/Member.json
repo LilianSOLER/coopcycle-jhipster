@@ -1,0 +1,64 @@
+{
+  "applications": ["coopcycleJhipster"],
+  "changelogDate": "20230409073622",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "member",
+  "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "50",
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "50",
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "254"
+    },
+    {
+      "fieldName": "role",
+      "fieldType": "MemberRole",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ADMIN,COURIER,RESTAURANT_OWNER,CUSTOMER"
+    },
+    {
+      "fieldName": "cooperativeId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "userId",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Member",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "userCoopcycle",
+      "otherEntityRelationshipName": "member",
+      "relationshipName": "userId",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "cooperative",
+      "otherEntityRelationshipName": "members",
+      "relationshipName": "cooperativeId",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}
