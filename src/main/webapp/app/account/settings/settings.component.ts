@@ -1,63 +1,64 @@
-import { email, maxLength, minLength, required } from 'vuelidate/lib/validators';
-import axios from 'axios';
-import { EMAIL_ALREADY_USED_TYPE } from '@/constants';
-import { Vue, Component } from 'vue-property-decorator';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
-const validations = {
-  settingsAccount: {
-    firstName: {
-      required,
-      minLength: minLength(1),
-      maxLength: maxLength(50),
-    },
-    lastName: {
-      required,
-      minLength: minLength(1),
-      maxLength: maxLength(50),
-    },
-    email: {
-      required,
-      email,
-      minLength: minLength(5),
-      maxLength: maxLength(254),
-    },
-  },
-};
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/auth/account.model';
+import { LANGUAGES } from 'app/config/language.constants';
+
+const initialAccount: Account = {} as Account;
 
 @Component({
-  validations,
+  selector: 'jhi-settings',
+  templateUrl: './settings.component.html',
 })
-export default class Settings extends Vue {
-  public success: string = null;
-  public error: string = null;
-  public errorEmailExists: string = null;
-  public languages: any = this.$store.getters.languages || [];
+export class SettingsComponent implements OnInit {
+  success = false;
+  languages = LANGUAGES;
 
-  public save(): void {
-    this.error = null;
-    this.errorEmailExists = null;
-    axios
-      .post('api/account', this.settingsAccount)
-      .then(() => {
-        this.error = null;
-        this.success = 'OK';
-        this.errorEmailExists = null;
-      })
-      .catch(error => {
-        this.success = null;
-        this.error = 'ERROR';
-        if (error.response.status === 400 && error.response.data.type === EMAIL_ALREADY_USED_TYPE) {
-          this.errorEmailExists = 'ERROR';
-          this.error = null;
-        }
-      });
+  settingsForm = new FormGroup({
+    firstName: new FormControl(initialAccount.firstName, {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+    }),
+    lastName: new FormControl(initialAccount.lastName, {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+    }),
+    email: new FormControl(initialAccount.email, {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email],
+    }),
+    langKey: new FormControl(initialAccount.langKey, { nonNullable: true }),
+
+    activated: new FormControl(initialAccount.activated, { nonNullable: true }),
+    authorities: new FormControl(initialAccount.authorities, { nonNullable: true }),
+    imageUrl: new FormControl(initialAccount.imageUrl, { nonNullable: true }),
+    login: new FormControl(initialAccount.login, { nonNullable: true }),
+  });
+
+  constructor(private accountService: AccountService, private translateService: TranslateService) {}
+
+  ngOnInit(): void {
+    this.accountService.identity().subscribe(account => {
+      if (account) {
+        this.settingsForm.patchValue(account);
+      }
+    });
   }
 
-  public get settingsAccount(): any {
-    return this.$store.getters.account;
-  }
+  save(): void {
+    this.success = false;
 
-  public get username(): string {
-    return this.$store.getters.account?.login ?? '';
+    const account = this.settingsForm.getRawValue();
+    this.accountService.save(account).subscribe(() => {
+      this.success = true;
+
+      this.accountService.authenticate(account);
+
+      if (account.langKey !== this.translateService.currentLang) {
+        this.translateService.use(account.langKey);
+      }
+    });
   }
 }

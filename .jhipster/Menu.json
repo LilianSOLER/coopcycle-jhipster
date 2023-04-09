@@ -1,0 +1,47 @@
+{
+  "applications": ["coopcycleJhipster"],
+  "changelogDate": "20230409073851",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "menu",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "50",
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "restaurantId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Menu",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "item",
+      "otherEntityRelationshipName": "menuId",
+      "relationshipName": "items",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "restaurant",
+      "otherEntityRelationshipName": "menus",
+      "relationshipName": "restaurantId",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

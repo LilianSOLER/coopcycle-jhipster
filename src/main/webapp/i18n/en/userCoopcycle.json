@@ -1,0 +1,33 @@
+{
+  "coopcycleJhipsterApp": {
+    "userCoopcycle": {
+      "home": {
+        "title": "User Coopcycles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Coopcycle",
+        "createOrEditLabel": "Create or edit a User Coopcycle",
+        "notFound": "No User Coopcycles found"
+      },
+      "created": "A new User Coopcycle is created with identifier {{ param }}",
+      "updated": "A User Coopcycle is updated with identifier {{ param }}",
+      "deleted": "A User Coopcycle is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Coopcycle {{ id }}?"
+      },
+      "detail": {
+        "title": "User Coopcycle"
+      },
+      "id": "ID",
+      "login": "Login",
+      "password": "Password",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "location": "Location",
+      "activated": "Activated",
+      "authorities": "Authorities",
+      "carts": "Carts",
+      "member": "Member"
+    }
+  }
+}
