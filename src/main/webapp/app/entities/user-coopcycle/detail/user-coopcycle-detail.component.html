@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="userCoopcycle">
+      <h2 data-cy="userCoopcycleDetailsHeading">
+        <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.detail.title">User Coopcycle</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ userCoopcycle.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.login">Login</span></dt>
+        <dd>
+          <span>{{ userCoopcycle.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.password">Password</span></dt>
+        <dd>
+          <span>{{ userCoopcycle.password }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.firstName">First Name</span></dt>
+        <dd>
+          <span>{{ userCoopcycle.firstName }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.lastName">Last Name</span></dt>
+        <dd>
+          <span>{{ userCoopcycle.lastName }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.email">Email</span></dt>
+        <dd>
+          <span>{{ userCoopcycle.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.location">Location</span></dt>
+        <dd>
+          <span>{{ userCoopcycle.location }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.activated">Activated</span></dt>
+        <dd>
+          <span>{{ userCoopcycle.activated }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.authorities">Authorities</span></dt>
+        <dd>
+          <span>{{ userCoopcycle.authorities }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.member">Member</span></dt>
+        <dd>
+          <div *ngIf="userCoopcycle.member">
+            <a [routerLink]="['/member', userCoopcycle.member.id, 'view']">{{ userCoopcycle.member.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-coopcycle', userCoopcycle.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

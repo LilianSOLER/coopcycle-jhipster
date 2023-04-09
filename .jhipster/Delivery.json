@@ -1,0 +1,58 @@
+{
+  "applications": ["coopcycleJhipster"],
+  "changelogDate": "20230409073854",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "delivery",
+  "fields": [
+    {
+      "fieldName": "cartId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "courierId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "restaurantId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "deliveryTime",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "pickupTime",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Delivery",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "member",
+      "relationshipName": "courierId",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "restaurant",
+      "relationshipName": "restaurantId",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "cart",
+      "otherEntityRelationshipName": "deliveries",
+      "relationshipName": "cartId",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

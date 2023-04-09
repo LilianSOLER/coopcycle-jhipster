@@ -1,0 +1,148 @@
+<div>
+  <h2 id="page-heading" data-cy="UserCoopcycleHeading">
+    <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.home.title">User Coopcycles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-user-coopcycle"
+        [routerLink]="['/user-coopcycle/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.home.createLabel"> Create a new User Coopcycle </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="userCoopcycles?.length === 0">
+    <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.home.notFound">No User Coopcycles found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="userCoopcycles && userCoopcycles.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="login">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.login">Login</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="password">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.password">Password</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="firstName">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.firstName">First Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastName">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.lastName">Last Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="email">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.email">Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="location">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.location">Location</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="activated">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.activated">Activated</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="authorities">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.authorities">Authorities</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="member.id">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.userCoopcycle.member">Member</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let userCoopcycle of userCoopcycles; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/user-coopcycle', userCoopcycle.id, 'view']">{{ userCoopcycle.id }}</a>
+          </td>
+          <td>{{ userCoopcycle.login }}</td>
+          <td>{{ userCoopcycle.password }}</td>
+          <td>{{ userCoopcycle.firstName }}</td>
+          <td>{{ userCoopcycle.lastName }}</td>
+          <td>{{ userCoopcycle.email }}</td>
+          <td>{{ userCoopcycle.location }}</td>
+          <td>{{ userCoopcycle.activated }}</td>
+          <td>{{ userCoopcycle.authorities }}</td>
+          <td>
+            <div *ngIf="userCoopcycle.member">
+              <a [routerLink]="['/member', userCoopcycle.member.id, 'view']">{{ userCoopcycle.member.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/user-coopcycle', userCoopcycle.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/user-coopcycle', userCoopcycle.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(userCoopcycle)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

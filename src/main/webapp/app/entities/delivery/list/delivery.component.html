@@ -1,0 +1,149 @@
+<div>
+  <h2 id="page-heading" data-cy="DeliveryHeading">
+    <span jhiTranslate="coopcycleJhipsterApp.delivery.home.title">Deliveries</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="coopcycleJhipsterApp.delivery.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-delivery"
+        [routerLink]="['/delivery/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="coopcycleJhipsterApp.delivery.home.createLabel"> Create a new Delivery </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="deliveries?.length === 0">
+    <span jhiTranslate="coopcycleJhipsterApp.delivery.home.notFound">No Deliveries found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="deliveries && deliveries.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cartId">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.delivery.cartId">Cart Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="courierId">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.delivery.courierId">Courier Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="restaurantId">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.delivery.restaurantId">Restaurant Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="deliveryTime">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.delivery.deliveryTime">Delivery Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="pickupTime">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.delivery.pickupTime">Pickup Time</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="courierId.id">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.delivery.courierId">Courier Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="restaurantId.id">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.delivery.restaurantId">Restaurant Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cartId.id">
+            <div class="d-flex">
+              <span jhiTranslate="coopcycleJhipsterApp.delivery.cartId">Cart Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let delivery of deliveries; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/delivery', delivery.id, 'view']">{{ delivery.id }}</a>
+          </td>
+          <td>{{ delivery.cartId }}</td>
+          <td>{{ delivery.courierId }}</td>
+          <td>{{ delivery.restaurantId }}</td>
+          <td>{{ delivery.deliveryTime | formatMediumDatetime }}</td>
+          <td>{{ delivery.pickupTime | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="delivery.courierId">
+              <a [routerLink]="['/member', delivery.courierId.id, 'view']">{{ delivery.courierId.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="delivery.restaurantId">
+              <a [routerLink]="['/restaurant', delivery.restaurantId.id, 'view']">{{ delivery.restaurantId.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="delivery.cartId">
+              <a [routerLink]="['/cart', delivery.cartId.id, 'view']">{{ delivery.cartId.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/delivery', delivery.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/delivery', delivery.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(delivery)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

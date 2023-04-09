@@ -1,0 +1,11 @@
+{
+  "coopcycleJhipsterApp": {
+    "MemberRole": {
+      "null": "",
+      "ADMIN": "ADMIN",
+      "COURIER": "COURIER",
+      "RESTAURANT_OWNER": "RESTAURANT_OWNER",
+      "CUSTOMER": "CUSTOMER"
+    }
+  }
+}

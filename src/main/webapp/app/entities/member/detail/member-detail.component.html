@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="member">
+      <h2 data-cy="memberDetailsHeading"><span jhiTranslate="coopcycleJhipsterApp.member.detail.title">Member</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ member.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.member.firstName">First Name</span></dt>
+        <dd>
+          <span>{{ member.firstName }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.member.lastName">Last Name</span></dt>
+        <dd>
+          <span>{{ member.lastName }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.member.email">Email</span></dt>
+        <dd>
+          <span>{{ member.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.member.role">Role</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'coopcycleJhipsterApp.MemberRole.' + member.role }}">{{ member.role }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.member.cooperativeId">Cooperative Id</span></dt>
+        <dd>
+          <span>{{ member.cooperativeId }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.member.userId">User Id</span></dt>
+        <dd>
+          <span>{{ member.userId }}</span>
+        </dd>
+        <dt><span jhiTranslate="coopcycleJhipsterApp.member.cooperativeId">Cooperative Id</span></dt>
+        <dd>
+          <div *ngIf="member.cooperativeId">
+            <a [routerLink]="['/cooperative', member.cooperativeId.id, 'view']">{{ member.cooperativeId.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/member', member.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,14 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "cooperative": "Cooperative",
+        "member": "Member",
+        "userCoopcycle": "User Coopcycle",
+        "restaurant": "Restaurant",
+        "menu": "Menu",
+        "item": "Item",
+        "cart": "Cart",
+        "delivery": "Delivery",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
