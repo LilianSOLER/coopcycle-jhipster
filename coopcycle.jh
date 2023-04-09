@@ -1,0 +1,92 @@
+
+application {
+  config {
+    baseName coopcycleJhipster,
+    applicationType monolith,
+    authenticationType jwt,
+    prodDatabaseType postgresql,
+    clientFramework Vuejs
+  }
+  entities *
+}
+
+// Entities
+entity Cooperative {
+name String required minlength(1) maxlength(255)
+description String maxlength(255)
+}
+
+entity Member {
+firstName String required minlength(1) maxlength(255)
+lastName String required minlength(1) maxlength(255)
+email String required pattern(/^\S+@\S+.\S+$/)
+role MemberRole required
+user User
+}
+
+entity User {
+login String required unique minlength(1) maxlength(50)
+password String required minlength(8)
+firstName String maxlength(50)
+lastName String maxlength(50)
+email String required unique pattern(/^\S+@\S+.\S+$/)
+activated Boolean
+}
+
+entity Restaurant {
+name String required minlength(1) maxlength(255)
+description String maxlength(255)
+address String required minlength(1) maxlength(255)
+location GPSCoordinates required
+cooperative Cooperative required
+}
+
+entity Menu {
+name String required minlength(1) maxlength(255)
+description String maxlength(255)
+restaurant Restaurant required
+}
+
+entity Item {
+name String required minlength(1) maxlength(255)
+description String maxlength(255)
+price Float required min(0)
+menu Menu required
+}
+
+entity Cart {
+user User required
+}
+
+entity Delivery {
+cart Cart required
+courier Member required
+restaurant Restaurant required
+deliveryTime Instant required
+pickupTime Instant required
+}
+
+// Enumerations
+enum MemberRole {
+ADMIN, COURIER, RESTAURANT_OWNER, CUSTOMER
+}
+
+// Relations
+relationship OneToMany {
+Cooperative{members} to Member{cooperative}
+Restaurant{menus} to Menu{restaurant}
+Menu{items} to Item{menu}
+User{cart} to Cart{user}
+Cart{delivery} to Delivery{cart}
+}
+
+relationship ManyToOne {
+Member{user} to User
+Delivery{courier} to Member
+Delivery{restaurant} to Restaurant
+}
+
+
+
+
+    
