@@ -1,0 +1,78 @@
+application {
+  config {
+    baseName coopcycleJhipster,
+    applicationType monolith,
+    authenticationType jwt,
+    prodDatabaseType postgresql
+  }
+  entities *
+}
+
+// Entities
+entity Cooperative {
+  name String required minlength(1) maxlength(255)
+  description String maxlength(255)
+}
+
+entity User {
+  login String required unique minlength(1) maxlength(50)
+  password String required minlength(8)
+  firstName String maxlength(50)
+  lastName String maxlength(50)
+  email String required unique pattern(/^\S+@\S+.\S+$/)
+  activated Boolean
+  role MemberRole required
+}
+
+entity Restaurant {
+  name String required minlength(1) maxlength(255)
+  description String maxlength(255)
+  location String required minlength(1) maxlength(255)
+  cooperative Cooperative required
+}
+
+entity Menu {
+  name String required minlength(1) maxlength(255)
+  description String maxlength(255)
+  restaurant Restaurant required
+}
+
+entity Item {
+  name String required minlength(1) maxlength(255)
+  description String maxlength(255)
+  price Float required min(0)
+  menu Menu required
+}
+
+entity Cart {
+  // Added `id` field for primary key
+  id Long required
+}
+
+entity Delivery {
+  // Added `id` field for primary key
+  id Long required
+  courier User required
+  restaurant Restaurant required
+  deliveryTime Instant required
+  pickupTime Instant required
+  location String required minlength(1) maxlength(255)
+}
+
+// Enumerations
+enum MemberRole {
+  ADMIN, COURIER, RESTAURANT_OWNER, CUSTOMER
+}
+
+// Relations
+relationship OneToMany {
+  Cooperative{users} to User{cooperative}
+  Restaurant{menus} to Menu{restaurant}
+  Menu{items} to Item{menu}
+  User{carts} to Cart{user}
+  Cart{deliveries} to Delivery{cart}
+}
+
+relationship ManyToOne {
+  Delivery{restaurant} to Restaurant
+}
